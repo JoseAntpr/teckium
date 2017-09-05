@@ -1,6 +1,6 @@
-# Documentación treckium
+# Documentación teckium
 
-Plataforma de blogging treckium.
+Plataforma de blogging teckium.
 
 ## Requisitos
 
