@@ -3,10 +3,9 @@ from django.contrib.auth.models import User
 
 DRAFT = 1
 PUBLISHED = 2
+PUBLICATION_STATUS = ((DRAFT, "Draft"), (PUBLISHED, "Published"))
 
-PUBLICATION_STATUS = ((DRAFT, "Draft"),(PUBLISHED, "Published"))
 
-# Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=250)
@@ -14,7 +13,7 @@ class Blog(models.Model):
     creation_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return title
+        return self.title
 
 
 class Post(models.Model):
@@ -23,18 +22,22 @@ class Post(models.Model):
     summary = models.CharField(max_length=300)
     content = models.TextField()
     publication_date = models.DateField()
-    modified_date = models.DateField(auto_now=True)
+    modified_date = models.DateFpield(auto_now=True)
     status = models.IntegerField(choices=PUBLICATION_STATUS)
 
     def __str__(self):
-        return title
+        return self.title
+
 
 class Commentary(models.Model):
     content = models.TextField()
+    
     def __str__(self):
-        return text
+        return self.content
  
+
 class Tag(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
+
     def __str__(self):
-        return name
+        return self.name
