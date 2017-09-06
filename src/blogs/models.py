@@ -22,8 +22,9 @@ class Post(models.Model):
     summary = models.CharField(max_length=300)
     content = models.TextField()
     publication_date = models.DateField()
-    modified_date = models.DateFpield(auto_now=True)
+    modified_date = models.DateField(auto_now=True)
     status = models.IntegerField(choices=PUBLICATION_STATUS)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -31,6 +32,7 @@ class Post(models.Model):
 
 class Commentary(models.Model):
     content = models.TextField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.content
@@ -38,6 +40,8 @@ class Commentary(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
+    blog = models.ManyToManyField(Blog, blank=True)
+    post = models.ManyToManyField(Post, blank=True)
 
     def __str__(self):
         return self.name
