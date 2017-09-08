@@ -15,8 +15,8 @@ class Tag(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=120)
-    description = models.CharField(max_length=250)
-    logo = models.ImageField()
+    description = models.CharField(max_length=250, blank=True, null=True)
+    logo = models.ImageField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
         Profile, on_delete=models.CASCADE, blank=True, null=True)
@@ -32,8 +32,8 @@ class Blog(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=120)
-    image = models.ImageField()
-    summary = models.CharField(max_length=300)
+    image = models.ImageField(blank=True, null=True)
+    summary = models.CharField(max_length=300, blank=True, null=True)
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
