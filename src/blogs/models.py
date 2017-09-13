@@ -39,6 +39,8 @@ class Post(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=PUBLICATION_STATUS)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)
+    owner = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, blank=False, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
