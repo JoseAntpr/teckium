@@ -25,3 +25,9 @@ class PostListAPIView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         profile = get_object_or_404(Profile, user=self.request.user)
         serializer.save(owner=profile)
+
+
+class PostDetailAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
