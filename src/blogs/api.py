@@ -27,7 +27,7 @@ class PostListAPIView(generics.ListCreateAPIView):
         serializer.save(owner=profile)
 
 
-class PostDetailAPIView(generics.RetrieveUpdateAPIView):
+class PostDetailAPIView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
