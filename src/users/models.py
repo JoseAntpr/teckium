@@ -19,7 +19,7 @@ class Profile(models.Model):
         related_name='related_to', blank=True)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class Relationship(models.Model):
