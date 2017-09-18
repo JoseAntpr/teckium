@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
@@ -9,7 +10,7 @@ from blogs.models import Post
 from blogs.serializers import PostSerializer, PostListSerializer
 from users.models import Profile
 
-
+# API de Post
 class PostListAPIView(generics.ListCreateAPIView):
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     serializer_class = PostSerializer
