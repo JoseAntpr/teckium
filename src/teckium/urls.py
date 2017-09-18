@@ -30,5 +30,7 @@ urlpatterns = [
     url(r'^api/1.0/', include('blogs.urls')),
     #url(r'^api/1.0/', include(router.urls)),
 
+    # DOC del API
+    url(r'^$', include('rest_framework_docs.urls')),
 
 ]
