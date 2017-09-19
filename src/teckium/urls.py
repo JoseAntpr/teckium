@@ -28,6 +28,7 @@ urlpatterns = [
 
     # API
     url(r'^api/1.0/', include('blogs.urls')),
+    url(r'^api/1.0/', include('users.urls')),
     #url(r'^api/1.0/', include(router.urls)),
 
     # DOC del API
