@@ -1,8 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from blogs.models import Post, Tag
+from blogs.models import Post, Tag, Blog
 
+
+class BlogSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Blog
+        fields = ("id", "title", "description", "logo",
+                  "creation_date", "owner", "favourites")
+    
 
 class PostListSerializer(serializers.ModelSerializer):
 

@@ -6,11 +6,25 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from blogs.models import Post, Tag
-from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer
+from blogs.models import Post, Tag, Blog
+from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer
 from users.models import Profile
 
+# API de Blog
+
+
+class BlogListAPIView (generics.ListCreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
+class BlogDetailAPIView (generics.RetrieveUpdateDestroyAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
 # API de Post
+
+
 class PostListAPIView(generics.ListCreateAPIView):
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     serializer_class = PostSerializer
@@ -35,6 +49,8 @@ class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # API de Tag
+
+
 class TagListAPIView(generics.ListCreateAPIView):
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = Tag.objects.all()

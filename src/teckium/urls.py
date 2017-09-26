@@ -15,13 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework.routers import DefaultRouter
 
 import blogs
-#from blogs.api import PostViewSet
 
-#router = DefaultRouter()
-#router.register("posts", PostViewSet, base_name="posts_api")
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
