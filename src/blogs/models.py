@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Profile 
+from django.contrib.auth.models import User
 
 DRAFT = 1
 PUBLISHED = 2
@@ -19,11 +19,11 @@ class Blog(models.Model):
     logo = models.ImageField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, blank=True, null=True)
+        User, on_delete=models.CASCADE, blank=True, null=True)
     favourites = models.ManyToManyField(
-        Profile, related_name="favourites", blank=True)
+        User, related_name="favourites", blank=True)
     mentions = models.ManyToManyField(
-        Profile, related_name="mentions", blank=True)
+        User, related_name="mentions", blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class Post(models.Model):
     status = models.IntegerField(choices=PUBLICATION_STATUS)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)
     owner = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, blank=False, null=True)
+        User, on_delete=models.CASCADE, blank=False, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
@@ -50,7 +50,7 @@ class Post(models.Model):
 class Commentary(models.Model):
     content = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    owner = models.ManyToManyField(Profile)
+    owner = models.ManyToManyField(User)
     answerComment = models.ForeignKey(
         'self', on_delete=models.CASCADE, blank=True, null=True)
     

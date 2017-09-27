@@ -16,12 +16,11 @@ class UserListSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField()
     email = serializers.EmailField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
 
 
 class UserSerializer(UserListSerializer):
-
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
     password = serializers.CharField()
 
     profile = ProfileSerializer()
@@ -53,3 +52,10 @@ class UserSerializer(UserListSerializer):
         profile.save()
 
         return instance
+
+
+class UserPostSerializer(UserListSerializer):
+    profile = ProfileSerializer()
+
+  
+
