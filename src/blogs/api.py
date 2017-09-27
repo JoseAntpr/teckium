@@ -28,8 +28,10 @@ class BlogDetailAPIView (generics.RetrieveUpdateDestroyAPIView):
 class PostListAPIView(generics.ListCreateAPIView):
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     serializer_class = PostSerializer
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
     filter_fields = ('id', 'title', 'status')
+    ordering_fields = ('-publication_date',)
+    ordering = ('-publication_date',)
 
     def get_serializer_class(self):
         return PostListSerializer if self.request.method == "GET" else PostSerializer
