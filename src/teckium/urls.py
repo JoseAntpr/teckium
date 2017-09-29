@@ -30,6 +30,6 @@ urlpatterns = [
     #url(r'^api/1.0/', include(router.urls)),
 
     # DOC del API
-    url(r'^$', include('rest_framework_docs.urls')),
+    url(r'^', include('rest_framework_docs.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
