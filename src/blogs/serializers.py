@@ -15,6 +15,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
 class PostListSerializer(serializers.ModelSerializer):
     owner = UserPostSerializer()
+    blog = BlogSerializer()
 
     class Meta:
         model = Post

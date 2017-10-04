@@ -29,7 +29,7 @@ class PostListAPIView(generics.ListCreateAPIView):
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     serializer_class = PostSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
-    filter_fields = ('id', 'title', 'status')
+    filter_fields = ('id', 'title', 'status', 'tags')
     ordering_fields = ('-publication_date',)
     ordering = ('-publication_date',)
 
