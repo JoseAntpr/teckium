@@ -144,3 +144,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 6
 }
+
+JWT_AUTH = {
+    'JWT_PAYLOAD_HANDLER': 'teckium.utils.jwt_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'teckium.utils.jwt_response_payload_handler',
+}
