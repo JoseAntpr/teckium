@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from users.models import Profile
 
@@ -16,24 +17,28 @@ class UserListSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField()
     email = serializers.EmailField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
 
 
 class UserSerializer(UserListSerializer):
     password = serializers.CharField()
 
-    profile = ProfileSerializer()
+    profile = ProfileSerializer(required=False)
 
     def create(self, validated_data):
-        profile_data = validated_data.pop('profile')
+        profile_data = validated_data.pop('profile', {})
+
         user = User.objects.create(**validated_data)
+        if validated_data.get('password'):
+            user.set_password(validated_data.get('password'))
+            user.save()
         Profile.objects.create(user=user, **profile_data)
 
         return user
 
     def update(self, instance, validated_data):
-        profile_data = validated_data.pop('profile')
+        profile_data = validated_data.pop('profile', {})
         profile = instance.profile
 
         instance.first_name = validated_data.get('first_name', instance.first_name)
@@ -52,6 +57,18 @@ class UserSerializer(UserListSerializer):
         profile.save()
 
         return instance
+
+    def validate(self, attrs):
+        # si estoy creando un usuario nuevo, comprobar si el username ya está usado
+        if self.instance is None and User.objects.filter(username=attrs.get("username")).exists():
+            raise ValidationError("Username already exists")
+
+        # actualizo el usuario cambiando el username -> OK si nuevo username no está usado
+        if self.instance is not None and self.instance.username != attrs.get("username") and User.objects.filter(
+                username=attrs.get("username")).exists():
+            raise ValidationError("Username already exists")
+
+        return attrs
 
 
 class UserPostSerializer(UserListSerializer):
