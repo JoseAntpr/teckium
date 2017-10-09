@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
+from blogs.models import Blog
 from users.models import Profile
 
 
@@ -34,6 +35,7 @@ class UserSerializer(UserListSerializer):
             user.set_password(validated_data.get('password'))
             user.save()
         Profile.objects.create(user=user, **profile_data)
+        Blog.objects.create(owner=user, title=user.username)
 
         return user
 
