@@ -6,8 +6,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from blogs.models import Post, Tag, Blog
-from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer
+from blogs.models import Post, Tag, Blog, Commentary
+from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer, CommentSerializer
 from users.models import Profile
 
 # API de Blog
@@ -67,3 +67,12 @@ class TagDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TagSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', 'name',)
+
+
+class CommentListAPIView(generics.ListCreateAPIView):
+    queryset = Commentary.objects.all()
+    serializer_class = CommentSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    ordering_fields = ('-publication_date',)
+    filter_fields = ('post',)
+    

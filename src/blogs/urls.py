@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from blogs.api import PostListAPIView, PostDetailAPIView, TagListAPIView, TagDetailAPIView, BlogListAPIView, BlogDetailAPIView
+from blogs.api import PostListAPIView, PostDetailAPIView, TagListAPIView, TagDetailAPIView, BlogListAPIView, BlogDetailAPIView, CommentListAPIView
 
 urlpatterns = [
     # API POST
@@ -13,4 +13,7 @@ urlpatterns = [
     # API BLOG
     url(r'^blogs/$', BlogListAPIView.as_view(), name="blogs_list_api"),
     url(r'^blogs/(?P<pk>[0-9]+)/$', BlogDetailAPIView.as_view(), name="blogs_detail_api"),
+
+    #API COMMENT
+    url(r'^comments/$', CommentListAPIView.as_view(), name="comment_list"),
 ]

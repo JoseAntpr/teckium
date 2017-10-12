@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from blogs.models import Post, Tag, Blog
+from blogs.models import Post, Tag, Blog, Commentary
 from users.serializers import UserPostSerializer
 
 
@@ -13,6 +13,13 @@ class BlogSerializer(serializers.ModelSerializer):
                   "creation_date", "owner", "favourites")
     
 
+class TagSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+
 class PostListSerializer(serializers.ModelSerializer):
     owner = UserPostSerializer()
     blog = BlogSerializer()
@@ -23,6 +30,8 @@ class PostListSerializer(serializers.ModelSerializer):
         
 
 class PostSerializer(serializers.ModelSerializer):
+    owner = UserPostSerializer()
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Post
@@ -30,8 +39,11 @@ class PostSerializer(serializers.ModelSerializer):
         read_only_fields = ('owner',)
 
 
-class TagSerializer(serializers.ModelSerializer):
-
+class CommentSerializer(serializers.ModelSerializer):
+    owner = UserPostSerializer()
+    
     class Meta:
-        model = Tag
+        model = Commentary
         fields = '__all__'
+        
+

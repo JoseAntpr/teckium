@@ -49,8 +49,9 @@ class Post(models.Model):
 
 class Commentary(models.Model):
     content = models.TextField()
+    publication_date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    owner = models.ManyToManyField(User)
+    owner = models.ForeignKey(User, null=True)
     answerComment = models.ForeignKey(
         'self', on_delete=models.CASCADE, blank=True, null=True)
     
