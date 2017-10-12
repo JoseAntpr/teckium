@@ -11,7 +11,7 @@ RELATIONSHIP_STATUSES = (
 class Profile(models.Model):
     user = models.OneToOneField(
         User, primary_key=True, on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True, null=True)
+    avatar = models.FileField(blank=True, null=True)
     bio = models.CharField(max_length=250, blank=True, null=True)
     creation_date = models.DateField(auto_now_add=True)
     relationships = models.ManyToManyField(

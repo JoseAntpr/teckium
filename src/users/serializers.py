@@ -11,19 +11,20 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         exclude = ('user',)
+        read_only_fields = ('creation_date', 'relationships',)
 
 
 class UserListSerializer(serializers.Serializer):
 
     id = serializers.ReadOnlyField()
-    username = serializers.CharField()
-    email = serializers.EmailField()
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
+    username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=False, allow_blank=True)
+    first_name = serializers.CharField(required=False, allow_blank=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
 
 
 class UserSerializer(UserListSerializer):
-    password = serializers.CharField()
+    password = serializers.CharField(required=False, allow_blank=True)
 
     profile = ProfileSerializer(required=False)
 
@@ -53,6 +54,7 @@ class UserSerializer(UserListSerializer):
         instance.save()
 
         profile.user = instance
+        print(profile_data)
         profile.avatar = profile_data.get('avatar', profile.avatar)
         profile.bio = profile_data.get('bio', profile.bio)
 
