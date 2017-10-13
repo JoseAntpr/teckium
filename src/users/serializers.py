@@ -76,7 +76,7 @@ class UserSerializer(UserListSerializer):
 
 
 class UserPostSerializer(UserListSerializer):
-    profile = ProfileSerializer()
+    profile = ProfileSerializer(required=False)
 
   
 

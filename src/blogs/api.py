@@ -74,5 +74,6 @@ class CommentListAPIView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     ordering_fields = ('-publication_date',)
+    ordering = ('-publication_date',)
     filter_fields = ('post',)
     
