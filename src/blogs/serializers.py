@@ -41,9 +41,20 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     owner = UserPostSerializer()
-    
+
     class Meta:
         model = Commentary
         fields = '__all__'
+    
+    def create(self, validated_data):
+        owner_data = validated_data.pop('owner')
+
+        comment = Commentary.objects.create(**validated_data)
+        user = User.objects.get(username=owner_data.get('username'))
+        comment.owner = user
+        comment.save()
+
+        return comment
+
         
 
