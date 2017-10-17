@@ -23,6 +23,7 @@ class TagSerializer(serializers.ModelSerializer):
 class PostListSerializer(serializers.ModelSerializer):
     owner = UserPostSerializer()
     blog = BlogSerializer()
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Post
@@ -30,13 +31,9 @@ class PostListSerializer(serializers.ModelSerializer):
         
 
 class PostSerializer(serializers.ModelSerializer):
-    owner = UserPostSerializer()
-    tags = TagSerializer(many=True)
-
     class Meta:
         model = Post
         fields = '__all__'
-        read_only_fields = ('owner',)
 
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -16,6 +16,8 @@ from users.models import Profile
 class BlogListAPIView (generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filter_fields = ('owner',)
 
 
 class BlogDetailAPIView (generics.RetrieveUpdateDestroyAPIView):
@@ -39,14 +41,17 @@ class PostListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         return Post.objects.all()
 
-    def perform_create(self, serializer):
-        profile = get_object_or_404(Profile, user=self.request.user)
-        serializer.save(owner=profile)
+    # def perform_create(self, serializer):
+    #     profile = get_object_or_404(Profile, user=self.request.user)
+    #     serializer.save(owner=profile)
 
 
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    
+    def get_serializer_class(self):
+        return PostListSerializer if self.request.method == "GET" else PostSerializer
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
 
