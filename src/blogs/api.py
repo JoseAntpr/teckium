@@ -49,7 +49,6 @@ class PostListAPIView(generics.ListCreateAPIView):
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    
     def get_serializer_class(self):
         return PostListSerializer if self.request.method == "GET" else PostSerializer
     #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
