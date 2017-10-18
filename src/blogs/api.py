@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from blogs.models import Post, Tag, Blog, Commentary
-from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer, CommentSerializer
+from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer, CommentListSerializer,CommentSerializer
 from users.models import Profile
 
 # API de Blog
@@ -75,9 +75,14 @@ class TagDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class CommentListAPIView(generics.ListCreateAPIView):
     queryset = Commentary.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     ordering_fields = ('-publication_date',)
     ordering = ('-publication_date',)
     filter_fields = ('post',)
-    
+
+class CommentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Commentary.objects.all()
+    serializer_class = CommentSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id',)

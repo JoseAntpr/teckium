@@ -36,7 +36,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentListSerializer(serializers.ModelSerializer):
     owner = UserPostSerializer()
 
     class Meta:
@@ -52,6 +52,14 @@ class CommentSerializer(serializers.ModelSerializer):
         comment.save()
 
         return comment
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Commentary
+        fields = '__all__'
+
 
         
 
