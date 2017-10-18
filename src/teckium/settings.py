@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'blogs',
     'django_filters',
     'rest_framework',
-    'rest_framework_docs'
+    'rest_framework_docs',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'teckium.urls'
@@ -142,7 +144,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 6
+    'PAGE_SIZE': 4
 }
 
 JWT_AUTH = {
@@ -150,3 +152,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
     'JWT_ALLOW_REFRESH': True,
 }
+
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8000',
+)
+
+
