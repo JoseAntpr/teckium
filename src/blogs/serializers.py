@@ -27,14 +27,14 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'image', 'summary', 'content', 'publication_date',
+        fields = ('id', 'title', 'image', 'summary', 'content', 'publication_date',
                   'status', 'blog', 'owner', 'tags', 'comments')
         
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = '__all__'
+        exclude = ('likes',)
 
 
 class CommentListSerializer(serializers.ModelSerializer):

@@ -42,6 +42,7 @@ class Post(models.Model):
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, blank=False, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    likes = models.ManyToManyField(User, related_name="likes", blank=True)
 
     def __str__(self):
         return self.title
