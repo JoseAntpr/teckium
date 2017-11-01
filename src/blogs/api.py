@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from blogs.models import Post, Tag, Blog, Commentary
+from blogs.permissions import BlogPermission, CommentPermission
 from blogs.serializers import PostSerializer, PostListSerializer, TagSerializer, BlogSerializer, CommentListSerializer,CommentSerializer
 from users.models import Profile
 
@@ -28,7 +29,7 @@ class BlogDetailAPIView (generics.RetrieveUpdateDestroyAPIView):
 
 
 class PostListAPIView(generics.ListCreateAPIView):
-    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    permission_classes = (BlogPermission,)
     serializer_class = PostSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filter_fields = ('id', 'title', 'status', 'tags', 'owner', 'blog')
@@ -49,16 +50,14 @@ class PostListAPIView(generics.ListCreateAPIView):
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (BlogPermission,)
+
     def get_serializer_class(self):
         return PostListSerializer if self.request.method == "GET" else PostSerializer
-    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
 
 # API de Tag
-
-
 class TagListAPIView(generics.ListCreateAPIView):
-    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -66,7 +65,6 @@ class TagListAPIView(generics.ListCreateAPIView):
 
 
 class TagDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -80,9 +78,12 @@ class CommentListAPIView(generics.ListCreateAPIView):
     ordering_fields = ('-publication_date',)
     ordering = ('-publication_date',)
     filter_fields = ('post',)
+    permission_classes = (CommentPermission,)
+
 
 class CommentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Commentary.objects.all()
     serializer_class = CommentSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id',)
+    permission_classes = (CommentPermission,)
