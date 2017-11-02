@@ -31,17 +31,14 @@ class BlogPermission(BasePermission):
         :param obj: User
         :return: True si puede, False si no puede
         """
-        print(request.user)
-        print(obj)
-        print(request.user == obj)
 
         post = Post.objects.get(title=obj)
 
         # si es admin o si es él mismo, le dejamos
-        if request.user.is_superuser or request.user == post.owner and request.method in ("POST", "PATCH", "PUT", "DELETE"):
+        if request.user.is_superuser or request.user == post.owner and request.method in ("POST", "PUT", "DELETE"):
             return True
 
-        if request.method == "GET":
+        if request.method in ("GET", "PATCH"):
             return True
 
         return False
