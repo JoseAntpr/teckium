@@ -38,7 +38,10 @@ class BlogPermission(BasePermission):
         if request.user.is_superuser or request.user == post.owner and request.method in ("POST", "PUT", "DELETE"):
             return True
 
-        if request.method in ("GET", "PATCH"):
+        if request.user.is_authenticated() and request.method == "PATCH":
+            return True
+
+        if request.method == "GET":
             return True
 
         return False
